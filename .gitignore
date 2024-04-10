@@ -27,3 +27,6 @@
 ###> DDEV ###
 /.ddev/
 !/.ddev/config.yaml
+###< DDEV ###
+
+.idea/
