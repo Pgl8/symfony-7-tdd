@@ -15,7 +15,7 @@ class LoginControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Request a specific page
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/login');
 
         // Validate a successful response and some content
         $this->assertResponseIsSuccessful();
@@ -27,7 +27,7 @@ class LoginControllerTest extends WebTestCase
     public function testRegisterIsShown(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/login');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('p', "Don't have an account yet?");
