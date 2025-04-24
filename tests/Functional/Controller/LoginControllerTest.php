@@ -19,9 +19,9 @@ class LoginControllerTest extends WebTestCase
 
         // Validate a successful response and some content
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Please sign in');
+        $this->assertSelectorTextContains('div', 'TDD login');
 
-        $this->assertGreaterThan(0, $crawler->filter('html:contains("Please sign in")')->count());
+        $this->assertGreaterThan(0, $crawler->filter('html:contains("TDD login")')->count());
     }
 
     public function testRegisterIsShown(): void
