@@ -7,6 +7,8 @@ parameters:
     app.default_admin_email: '%env(DEFAULT_ADMIN_EMAIL)%'
     app.default_admin_password: '%env(DEFAULT_ADMIN_PASSWORD)%'
     app.default_admin_username: '%env(DEFAULT_ADMIN_USERNAME)%'
+    app.test_user_email: '%env(APP_TEST_USER_EMAIL)%'
+    app.test_user_password: '%env(APP_TEST_USER_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file

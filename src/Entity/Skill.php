@@ -16,17 +16,21 @@ class Skill
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $title = null;
+    private ?string $name = null;
+
+    #[ORM\ManyToOne(inversedBy: 'skills')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?SkillCategory $skillCategory = null;
 
     /**
-     * @var Collection<int, Employee>
+     * @var Collection<int, EmployeeSkill>
      */
-    #[ORM\ManyToMany(targetEntity: Employee::class, mappedBy: 'Skills')]
-    private Collection $employees;
+    #[ORM\OneToMany(targetEntity: EmployeeSkill::class, mappedBy: 'skill')]
+    private Collection $employeeSkills;
 
     public function __construct()
     {
-        $this->employees = new ArrayCollection();
+        $this->employeeSkills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -34,40 +38,55 @@ class Skill
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): static
+    public function setName(string $name): static
     {
-        $this->title = $title;
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSkillCategory(): ?SkillCategory
+    {
+        return $this->skillCategory;
+    }
+
+    public function setSkillCategory(?SkillCategory $skillCategory): static
+    {
+        $this->skillCategory = $skillCategory;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Employee>
+     * @return Collection<int, EmployeeSkill>
      */
-    public function getEmployees(): Collection
+    public function getEmployeeSkills(): Collection
     {
-        return $this->employees;
+        return $this->employeeSkills;
     }
 
-    public function addEmployee(Employee $employee): static
+    public function addEmployeeSkill(EmployeeSkill $employeeSkill): static
     {
-        if (!$this->employees->contains($employee)) {
-            $this->employees->add($employee);
-            $employee->addSkill($this);
+        if (!$this->employeeSkills->contains($employeeSkill)) {
+            $this->employeeSkills->add($employeeSkill);
+            $employeeSkill->setSkill($this);
         }
 
         return $this;
     }
 
-    public function removeEmployee(Employee $employee): static
+    public function removeEmployeeSkill(EmployeeSkill $employeeSkill): static
     {
-        if ($this->employees->removeElement($employee)) {
-            $employee->removeSkill($this);
+        if ($this->employeeSkills->removeElement($employeeSkill)) {
+            // set the owning side to null (unless already changed)
+            if ($employeeSkill->getSkill() === $this) {
+                $employeeSkill->setSkill(null);
+            }
         }
 
         return $this;
